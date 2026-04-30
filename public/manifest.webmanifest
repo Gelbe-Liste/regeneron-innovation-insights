@@ -1,0 +1,23 @@
+{
+  "name": "Regeneron Innovation Insights",
+  "short_name": "Regeneron Insights",
+  "description": "Mobile-first NFC Microsite für Regeneron Inhalte.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#071A3C",
+  "theme_color": "#071A3C",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
