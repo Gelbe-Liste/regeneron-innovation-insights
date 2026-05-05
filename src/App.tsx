@@ -404,10 +404,10 @@ function ModuleScreen({
           </section>
 
           <nav className="bottom-nav">
-            <button onClick={goBack}>{index === 0 ? "Menü" : "Zurück"}</button>
+            <button onClick={goBack}>{index === 0 ? "Menu" : "Back"}</button>
             <button onClick={onHome}>⌂</button>
             <button className="primary" onClick={goNext}>
-              {index === module.screens.length - 1 ? "Fertig" : "Weiter"}
+              {index === module.screens.length - 1 ? "Done" : "Next"}
             </button>
           </nav>
         </main>
@@ -433,7 +433,7 @@ export default function App() {
 }
 
 <footer className="legal-footer">
-  <a href="/impressum.html">Impressum</a>
+  <a href="/impressum.html">Legal Notice</a>
   <span>·</span>
-  <a href="/datenschutz.html">Datenschutz</a>
+  <a href="/datenschutz.html">Privacy Policy</a>
 </footer>
