@@ -201,14 +201,12 @@ function HomeScreen({ openModule }: { openModule: (id: string) => void }) {
         <Header onHome={() => {}} />
 
         <main className="home-screen">
-          <div className="badge">NFC EXPERIENCE</div>
+          <div className="badge">16th EPCM Hamburg</div>
 
-          <h1>Regeneron Innovation Insights</h1>
+          <h1>WHO WE ARE</h1>
 
           <p className="intro">
-            Mobile-first Microsite für wissenschaftliche Materialien. Inhalte
-            werden angeteasert, modular geführt und am Ende als PDF
-            bereitgestellt.
+          Regeneron is a global biotechnology company that invents life-transforming medicines for people with serious diseases
           </p>
 
           <section className="module-list">
@@ -238,24 +236,21 @@ function HomeScreen({ openModule }: { openModule: (id: string) => void }) {
             <div className="coming-soon">
               <div className="plus">＋</div>
               <div>
-                <strong>Weitere Inhalte folgen</strong>
+                <strong>More content coming soon</strong>
                 <p>
-                  Neue PDF- oder PPT-Materialien können als zusätzliche Kacheln
-                  ergänzt werden.
+                  New PDF or PPT materials can be added as additional tiles.
                 </p>
               </div>
             </div>
           </section>
 
           <div className="hint-box">
-            Tipp: Über das Browser-Menü kann diese Web-App zum Homebildschirm
-            hinzugefügt werden. Im Live-Setup wird dafür ein Web-App-Manifest
-            hinterlegt.
+            Tip: You can return to the home screen at any time using the navigation bar at the bottom.
           </div>
           <footer className="legal-footer">
-  <a href="/impressum.html">Impressum</a>
+  <a href="/impressum.html">Legal Notice</a>
   <span>·</span>
-  <a href="/datenschutz.html">Datenschutz</a>
+  <a href="/datenschutz.html">Privacy Policy</a>
 </footer>
         </main>
       </div>
