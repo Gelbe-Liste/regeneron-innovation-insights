@@ -1,7 +1,7 @@
 {
   "name": "Regeneron Innovation Insights",
   "short_name": "Regeneron Insights",
-  "description": "Mobile-first NFC Microsite für Regeneron Inhalte.",
+  "description": "Mobile-first NFC Microsite for Regeneron Insights",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
