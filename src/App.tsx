@@ -4,7 +4,6 @@ type Screen = {
   label: string;
   title: string;
   body: string;
-  visual: string;
   cards?: string[];
   metrics?: [string, string][];
   timeline?: [string, string][];
@@ -53,14 +52,12 @@ const modules: Module[] = [
         title: "Science to Medicine® — accelerated by technology",
         body:
           "VelociSuite® brings together proprietary technologies that support targeted and efficient study of disease biology and the creation of new therapeutics.",
-        visual: "VS"
       },
       {
         label: "Genetics & Models",
         title: "From precise gene alterations to disease models",
         body:
           "VelociGene® enables precise genetic alterations. VelociMouse® supports accelerated generation of genetically modified mice for disease models, target validation, and candidate testing.",
-        visual: "DNA",
         cards: ["VelociGene®", "VelociMouse®"]
       },
       {
@@ -68,7 +65,6 @@ const modules: Module[] = [
         title: "Human antibodies and bispecific formats",
         body:
           "VelocImmune® supports fully human antibody development. Veloci-Bi® enables full-length human bispecific antibodies. VelociMab® supports candidate selection and production cell-line generation.",
-        visual: "AB",
         cards: ["VelocImmune®", "Veloci-Bi®", "VelociMab®"]
       },
       {
@@ -76,7 +72,6 @@ const modules: Module[] = [
         title: "Extending discovery into new therapeutic directions",
         body:
           "VelociHum®, VelociT®, VelociNator™ and VelociVax™ support testing of human therapeutics, TCR generation, target-pairing optimization and mRNA-based therapeutic exploration.",
-        visual: "RX",
         cards: ["VelociHum®", "VelociT®", "VelociNator™", "VelociVax™"]
       },
       {
@@ -84,7 +79,6 @@ const modules: Module[] = [
         title: "Original material",
         body:
           "Download the source PDF or return to the main menu to explore additional Regeneron materials.",
-        visual: "PDF",
         download: {
           label: "Download VelociSuite® Flyer",
           href: pdfs.velocisuite
@@ -105,14 +99,12 @@ const modules: Module[] = [
         title: "Genetics to therapeutics, designed for all",
         body:
           "The Regeneron Genetics Center focuses on early gene discovery and functional genomics to identify novel drug targets, clinical indications, and genomic biomarkers.",
-        visual: "RGC"
       },
       {
         label: "Key Metrics",
         title: "A global genetics engine",
         body:
           "Selected metrics from the RGC factsheet, prepared for a concise mobile overview.",
-        visual: "2.7M+",
         metrics: [
           ["2.7M+", "exomes sequenced"],
           ["650K+", "underrepresented individuals sequenced"],
@@ -127,7 +119,6 @@ const modules: Module[] = [
         title: "RGC milestones",
         body:
           "A condensed timeline of selected milestones from the original RGC factsheet.",
-        visual: "2013",
         timeline: [
           ["2013", "RGC founded; foundational Geisinger initiative launched."],
           ["2020", "1,000,000th exome sequenced."],
@@ -144,7 +135,6 @@ const modules: Module[] = [
         title: "Therapeutic areas of interest",
         body:
           "The RGC factsheet highlights a broad set of therapeutic areas spanning oncology, cardiovascular, metabolic, immune, respiratory and neurological diseases.",
-        visual: "TA",
         areas: [
           "Oncology",
           "Cardiovascular",
@@ -163,7 +153,6 @@ const modules: Module[] = [
         title: "Original material",
         body:
           "Download the source PDF or return to the main menu to explore additional Regeneron materials.",
-        visual: "PDF",
         download: {
           label: "Download RGC Factsheet",
           href: pdfs.rgc
@@ -182,8 +171,19 @@ function Header({
 }) {
   return (
     <header className="app-header">
-      <button className="icon-button" onClick={onHome}>
-        {inModule ? "←" : "☰"}
+      <button
+        className="icon-button"
+        style={{
+          width: "auto",
+          minWidth: "108px",
+          height: "45px",
+          borderRadius: "18px",
+          padding: "0 22px",
+          fontWeight: 700
+        }}
+        onClick={onHome}
+      >
+        Contact
       </button>
 
       <div className="regeneron-logo">
@@ -194,11 +194,11 @@ function Header({
   );
 }
 
-function HomeScreen({ openModule }: { openModule: (id: string) => void }) {
+function HomeScreen({ openModule, onContact }: { openModule: (id: string) => void; onContact: () => void }) {
   return (
     <div className="page-shell">
       <div className="phone">
-        <Header onHome={() => {}} />
+        <Header onHome={onContact} />
 
         <main className="home-screen">
           <div className="badge">16th EPCM Hamburg</div>
@@ -222,13 +222,22 @@ function HomeScreen({ openModule }: { openModule: (id: string) => void }) {
                   openModule(mod.id);
                 }}
               >
-                <div className="module-card-top">
-                  <div className="round-icon">{mod.theme === "rgc" ? "RGC" : "VS"}</div>
+
+                <div className="eyebrow">{mod.eyebrow}</div>
+
+                <div
+                  className="module-title-row"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    gap: "12px"
+                  }}
+                >
+                  <h2>{mod.title}</h2>
                   <div className="arrow">›</div>
                 </div>
 
-                <div className="eyebrow">{mod.eyebrow}</div>
-                <h2>{mod.title}</h2>
                 <p>{mod.subtitle}</p>
               </button>
             ))}
@@ -254,14 +263,6 @@ function HomeScreen({ openModule }: { openModule: (id: string) => void }) {
 </footer>
         </main>
       </div>
-    </div>
-  );
-}
-
-function Visual({ label, theme }: { label: string; theme: "veloci" | "rgc" }) {
-  return (
-    <div className={`visual-circle ${theme}`}>
-      <span>{label}</span>
     </div>
   );
 }
@@ -331,12 +332,88 @@ function ScreenContent({ screen }: { screen: Screen }) {
   );
 }
 
+
+function ContactScreen({ onHome, onMenu }: { onHome: () => void; onMenu: () => void }) {
+  return (
+    <div className="page-shell">
+      <div className="phone">
+        <Header inModule onHome={onHome} />
+
+        <main className="module-screen rgc">
+          <section className="screen-card" style={{ marginTop: "28px" }}>
+            <div className="screen-label">Contact</div>
+            <h1>Medical Information Regeneron</h1>
+
+            <p>
+              Please contact us for medical-scientific questions, reports of adverse events,
+              and product complaints.
+            </p>
+
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "14px",
+                marginTop: "24px",
+                width: "100%"
+              }}
+            >
+              <div
+                className="content-card large"
+                style={{
+                  width: "100%",
+                  boxSizing: "border-box",
+                  overflowWrap: "anywhere",
+                  wordBreak: "break-word",
+                  lineHeight: 1.4
+                }}
+              >
+                <strong>Tel:</strong> +49 (0) 800 330 4267
+              </div>
+
+              <div
+                className="content-card large"
+                style={{
+                  width: "100%",
+                  boxSizing: "border-box",
+                  overflowWrap: "anywhere",
+                  wordBreak: "break-word",
+                  lineHeight: 1.4
+                }}
+              >
+                <strong>Mail:</strong> medical.information_global@regeneron.com
+              </div>
+            </div>
+
+            <p style={{ marginTop: "24px" }}>
+              January 2026<br />
+              DE-UNB-DECK-24-01-0001
+            </p>
+
+            <p style={{ marginTop: "16px", fontSize: "12px", opacity: 0.75 }}>
+              © 2024 Regeneron Pharma GmbH, Germany. All Rights Reserved.
+            </p>
+          </section>
+
+          <nav className="bottom-nav">
+            <button onClick={onHome}>Back</button>
+            <button onClick={onMenu}>Menu</button>
+            <button className="primary" onClick={onHome}>Done</button>
+          </nav>
+        </main>
+      </div>
+    </div>
+  );
+}
+
 function ModuleScreen({
   module,
-  onHome
+  onHome,
+  onMenu
 }: {
   module: Module;
   onHome: () => void;
+  onMenu: () => void;
 }) {
   const [index, setIndex] = useState(0);
   const screen = module.screens[index];
@@ -393,9 +470,7 @@ function ModuleScreen({
             <div className="progress-fill" style={{ width: `${progress}%` }} />
           </div>
 
-          <Visual label={screen.visual} theme={module.theme} />
-
-          <section className="screen-card">
+          <section className="screen-card" style={{ marginTop: "28px" }}>
             <div className="screen-label">{screen.label}</div>
             <h1>{screen.title}</h1>
             <p>{screen.body}</p>
@@ -404,8 +479,8 @@ function ModuleScreen({
           </section>
 
           <nav className="bottom-nav">
-            <button onClick={goBack}>{index === 0 ? "Menu" : "Back"}</button>
-            <button onClick={onHome}>⌂</button>
+            <button onClick={goBack}>Back</button>
+            <button onClick={onMenu}>Menu</button>
             <button className="primary" onClick={goNext}>
               {index === module.screens.length - 1 ? "Done" : "Next"}
             </button>
@@ -418,22 +493,41 @@ function ModuleScreen({
 
 export default function App() {
   const [activeModuleId, setActiveModuleId] = useState<string | null>(null);
+  const [showContact, setShowContact] = useState(false);
   const activeModule = modules.find((m) => m.id === activeModuleId);
+
+  if (showContact) {
+    return (
+      <ContactScreen
+        onHome={() => setShowContact(false)}
+        onMenu={() => {
+          setShowContact(false);
+          setActiveModuleId(null);
+        }}
+      />
+    );
+  }
 
   if (activeModule) {
     return (
       <ModuleScreen
         module={activeModule}
-        onHome={() => setActiveModuleId(null)}
+        onHome={() => setShowContact(true)}
+        onMenu={() => {
+          setShowContact(false);
+          setActiveModuleId(null);
+        }}
       />
     );
   }
 
-  return <HomeScreen openModule={setActiveModuleId} />;
+  return (
+    <HomeScreen
+      openModule={(id) => {
+        setShowContact(false);
+        setActiveModuleId(id);
+      }}
+      onContact={() => setShowContact(true)}
+    />
+  );
 }
-
-<footer className="legal-footer">
-  <a href="/impressum.html">Legal Notice</a>
-  <span>·</span>
-  <a href="/datenschutz.html">Privacy Policy</a>
-</footer>
