@@ -162,13 +162,7 @@ const modules: Module[] = [
   }
 ];
 
-function Header({
-  inModule,
-  onHome
-}: {
-  inModule?: boolean;
-  onHome: () => void;
-}) {
+function Header({ onContact }: { onContact: () => void }) {
   return (
     <header className="app-header">
       <button
@@ -181,7 +175,7 @@ function Header({
           padding: "0 22px",
           fontWeight: 700
         }}
-        onClick={onHome}
+        onClick={onContact}
       >
         Contact
       </button>
@@ -198,7 +192,7 @@ function HomeScreen({ openModule, onContact }: { openModule: (id: string) => voi
   return (
     <div className="page-shell">
       <div className="phone">
-        <Header onHome={onContact} />
+        <Header onContact={onContact} />
 
         <main className="home-screen">
           <div className="badge">16th EPCM Hamburg</div>
@@ -333,11 +327,11 @@ function ScreenContent({ screen }: { screen: Screen }) {
 }
 
 
-function ContactScreen({ onHome, onMenu }: { onHome: () => void; onMenu: () => void }) {
+function ContactScreen({ onBack, onMenu, onContact }: { onBack: () => void; onMenu: () => void; onContact: () => void }) {
   return (
     <div className="page-shell">
       <div className="phone">
-        <Header inModule onHome={onHome} />
+        <Header onContact={onContact} />
 
         <main className="module-screen rgc">
           <section className="screen-card" style={{ marginTop: "28px" }}>
@@ -396,9 +390,9 @@ function ContactScreen({ onHome, onMenu }: { onHome: () => void; onMenu: () => v
           </section>
 
           <nav className="bottom-nav">
-            <button onClick={onHome}>Back</button>
+            <button onClick={onBack}>Back</button>
             <button onClick={onMenu}>Menu</button>
-            <button className="primary" onClick={onHome}>Done</button>
+            <button className="primary" onClick={onMenu}>Done</button>
           </nav>
         </main>
       </div>
@@ -408,11 +402,11 @@ function ContactScreen({ onHome, onMenu }: { onHome: () => void; onMenu: () => v
 
 function ModuleScreen({
   module,
-  onHome,
+  onContact,
   onMenu
 }: {
   module: Module;
-  onHome: () => void;
+  onContact: () => void;
   onMenu: () => void;
 }) {
   const [index, setIndex] = useState(0);
@@ -425,7 +419,7 @@ function ModuleScreen({
         module_id: module.id,
         module_title: module.title
       });
-      onHome();
+      onMenu();
     } else {
       trackEvent("screen_back", {
         module_id: module.id,
@@ -442,7 +436,7 @@ function ModuleScreen({
         module_id: module.id,
         module_title: module.title
       });
-      onHome();
+      onMenu();
     } else {
       trackEvent("screen_next", {
         module_id: module.id,
@@ -456,7 +450,7 @@ function ModuleScreen({
   return (
     <div className="page-shell">
       <div className="phone">
-        <Header inModule onHome={onHome} />
+        <Header onContact={onContact} />
 
         <main className={`module-screen ${module.theme}`}>
           <div className="module-progress-row">
@@ -499,11 +493,12 @@ export default function App() {
   if (showContact) {
     return (
       <ContactScreen
-        onHome={() => setShowContact(false)}
+        onBack={() => setShowContact(false)}
         onMenu={() => {
           setShowContact(false);
           setActiveModuleId(null);
         }}
+        onContact={() => setShowContact(true)}
       />
     );
   }
@@ -512,7 +507,7 @@ export default function App() {
     return (
       <ModuleScreen
         module={activeModule}
-        onHome={() => setShowContact(true)}
+        onContact={() => setShowContact(true)}
         onMenu={() => {
           setShowContact(false);
           setActiveModuleId(null);
