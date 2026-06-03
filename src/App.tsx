@@ -397,41 +397,6 @@ function ModuleScreen({
   const [index, setIndex] = useState(0);
   const screen = module.screens[index];
   const progress = ((index + 1) / module.screens.length) * 100;
-
-  const goBack = () => {
-    if (index === 0) {
-      trackEvent("module_back_to_menu", {
-        module_id: module.id,
-        module_title: module.title
-      });
-      onMenu();
-    } else {
-      trackEvent("screen_back", {
-        module_id: module.id,
-        from_screen: screen.label,
-        to_screen: module.screens[index - 1].label
-      });
-      setIndex(index - 1);
-    }
-  };
-
-  const goNext = () => {
-    if (index === module.screens.length - 1) {
-      trackEvent("module_complete", {
-        module_id: module.id,
-        module_title: module.title
-      });
-      onMenu();
-    } else {
-      trackEvent("screen_next", {
-        module_id: module.id,
-        from_screen: screen.label,
-        to_screen: module.screens[index + 1].label
-      });
-      setIndex(index + 1);
-    }
-  };
-
   return (
     <div className="page-shell">
       <div className="phone">
