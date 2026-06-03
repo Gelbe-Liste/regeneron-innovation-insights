@@ -394,7 +394,7 @@ function ModuleScreen({
   onContact: () => void;
   onMenu: () => void;
 }) {
-  const [index, setIndex] = useState(0);
+  const index = 0;
   const screen = module.screens[index];
   const progress = ((index + 1) / module.screens.length) * 100;
   return (
