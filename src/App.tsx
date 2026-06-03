@@ -8,6 +8,10 @@ type Screen = {
   metrics?: [string, string][];
   timeline?: [string, string][];
   areas?: string[];
+  preview?: {
+    src: string;
+    alt: string;
+  };
   download?: {
     label: string;
     href: string;
@@ -19,13 +23,14 @@ type Module = {
   eyebrow: string;
   title: string;
   subtitle: string;
-  theme: "veloci" | "rgc";
+  theme: "veloci" | "rgc" | "publications";
   screens: Screen[];
 };
 
 const pdfs = {
   velocisuite: "/downloads/velocisuite-flyer-2025.pdf",
-  rgc: "/downloads/rgc-factsheet-2025.pdf"
+  rgc: "/downloads/rgc-factsheet-2025.pdf",
+  publications: "/downloads/regeneron-publications-asco-2026.pdf"
 };
 
 function trackEvent(eventName: string, data?: Record<string, string | number>) {
@@ -44,41 +49,18 @@ const modules: Module[] = [
     eyebrow: "Technology Leader",
     title: "VelociSuite® Technologies",
     subtitle:
-      "Proprietary technology platforms designed to address drug development bottlenecks.",
+      "Proprietary technology platforms designed to address drug development bottlenecks",
     theme: "veloci",
     screens: [
-      {
-        label: "Overview",
-        title: "Science to Medicine® — accelerated by technology",
-        body:
-          "VelociSuite® brings together proprietary technologies that support targeted and efficient study of disease biology and the creation of new therapeutics.",
-      },
-      {
-        label: "Genetics & Models",
-        title: "From precise gene alterations to disease models",
-        body:
-          "VelociGene® enables precise genetic alterations. VelociMouse® supports accelerated generation of genetically modified mice for disease models, target validation, and candidate testing.",
-        cards: ["VelociGene®", "VelociMouse®"]
-      },
-      {
-        label: "Human Antibodies",
-        title: "Human antibodies and bispecific formats",
-        body:
-          "VelocImmune® supports fully human antibody development. Veloci-Bi® enables full-length human bispecific antibodies. VelociMab® supports candidate selection and production cell-line generation.",
-        cards: ["VelocImmune®", "Veloci-Bi®", "VelociMab®"]
-      },
-      {
-        label: "Advanced Platforms",
-        title: "Extending discovery into new therapeutic directions",
-        body:
-          "VelociHum®, VelociT®, VelociNator™ and VelociVax™ support testing of human therapeutics, TCR generation, target-pairing optimization and mRNA-based therapeutic exploration.",
-        cards: ["VelociHum®", "VelociT®", "VelociNator™", "VelociVax™"]
-      },
       {
         label: "Download",
         title: "Original material",
         body:
-          "Download the source PDF or return to the main menu to explore additional Regeneron materials.",
+          "Download the source PDF or return to the main menu to explore additional Regeneron materials",
+        preview: {
+          src: "/downloads/velocisuite-preview.png",
+          alt: "VelociSuite® technologies preview"
+        },
         download: {
           label: "Download VelociSuite® Flyer",
           href: pdfs.velocisuite
@@ -91,71 +73,45 @@ const modules: Module[] = [
     eyebrow: "Human Genetics",
     title: "Regeneron Genetics Center®",
     subtitle:
-      "Early gene discovery and functional genomics to advance genetics-informed therapeutics.",
+      "Early gene discovery and functional genomics to advance genetics-informed therapeutics",
     theme: "rgc",
     screens: [
-      {
-        label: "Overview",
-        title: "Genetics to therapeutics, designed for all",
-        body:
-          "The Regeneron Genetics Center focuses on early gene discovery and functional genomics to identify novel drug targets, clinical indications, and genomic biomarkers.",
-      },
-      {
-        label: "Key Metrics",
-        title: "A global genetics engine",
-        body:
-          "Selected metrics from the RGC factsheet, prepared for a concise mobile overview.",
-        metrics: [
-          ["2.7M+", "exomes sequenced"],
-          ["650K+", "underrepresented individuals sequenced"],
-          ["150+", "collaborations"],
-          ["250+", "publications authored"],
-          ["6", "genetic medicine programs in clinic"],
-          ["~30", "therapeutic programs started"]
-        ]
-      },
-      {
-        label: "Milestones",
-        title: "RGC milestones",
-        body:
-          "A condensed timeline of selected milestones from the original RGC factsheet.",
-        timeline: [
-          ["2013", "RGC founded; foundational Geisinger initiative launched."],
-          ["2020", "1,000,000th exome sequenced."],
-          ["2023", "10-year anniversary."],
-          ["2024", "Whole-exome sequencing approach validated."],
-          [
-            "2025",
-            "Truveta collaboration and large-scale protein study initiated."
-          ]
-        ]
-      },
-      {
-        label: "Therapeutic Areas",
-        title: "Therapeutic areas of interest",
-        body:
-          "The RGC factsheet highlights a broad set of therapeutic areas spanning oncology, cardiovascular, metabolic, immune, respiratory and neurological diseases.",
-        areas: [
-          "Oncology",
-          "Cardiovascular",
-          "Metabolic",
-          "Musculoskeletal",
-          "Ophthalmology",
-          "Infectious Diseases",
-          "Respiratory Diseases",
-          "Immune Diseases",
-          "Founder & Special Populations",
-          "Neurology"
-        ]
-      },
       {
         label: "Download",
         title: "Original material",
         body:
-          "Download the source PDF or return to the main menu to explore additional Regeneron materials.",
+          "Download the source PDF or return to the main menu to explore additional Regeneron materials",
+        preview: {
+          src: "/downloads/rgc-preview.png",
+          alt: "Regeneron Genetics Center® preview"
+        },
         download: {
           label: "Download RGC Factsheet",
           href: pdfs.rgc
+        }
+      }
+    ]
+  },
+  {
+    id: "publications",
+    eyebrow: "Regeneron Publications",
+    title: "Post-ASCO 2026",
+    subtitle:
+      "Overview and collated Regeneron Publications from ASCO 2026",
+    theme: "publications",
+    screens: [
+      {
+        label: "Download",
+        title: "Original material",
+        body:
+          "Download the source PDF or return to the main menu to explore additional Regeneron materials",
+        preview: {
+          src: "/downloads/regeneron-publications-preview.png",
+          alt: "Regeneron Publications at ASCO 2026 preview"
+        },
+        download: {
+          label: "Download Regeneron Publications",
+          href: pdfs.publications
         }
       }
     ]
@@ -208,6 +164,16 @@ function HomeScreen({ openModule, onContact }: { openModule: (id: string) => voi
               <button
                 key={mod.id}
                 className={`module-card ${mod.theme}`}
+                style={{
+                  minHeight: "128px",
+                  padding: "22px 22px",
+                  ...(mod.theme === "publications"
+                    ? {
+                        background:
+                          "linear-gradient(135deg, #4eb6dc 0%, #0a4b86 48%, #062744 100%)"
+                      }
+                    : {})
+                }}
                 onClick={() => {
                   trackEvent("module_open", {
                     module_id: mod.id,
@@ -217,7 +183,7 @@ function HomeScreen({ openModule, onContact }: { openModule: (id: string) => voi
                 }}
               >
 
-                <div className="eyebrow">{mod.eyebrow}</div>
+                <div className="eyebrow" style={{ marginBottom: 0 }}>{mod.eyebrow}</div>
 
                 <div
                   className="module-title-row"
@@ -225,26 +191,19 @@ function HomeScreen({ openModule, onContact }: { openModule: (id: string) => voi
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "space-between",
-                    gap: "12px"
+                    gap: "12px",
+                    marginTop: "6px"
                   }}
                 >
-                  <h2>{mod.title}</h2>
+                  <h2 style={{ margin: 0, lineHeight: 1.08 }}>{mod.title}</h2>
                   <div className="arrow">›</div>
                 </div>
 
-                <p>{mod.subtitle}</p>
+                <p style={{ marginTop: "10px", marginBottom: 0, lineHeight: 1.35 }}>{mod.subtitle}</p>
               </button>
             ))}
 
-            <div className="coming-soon">
-              <div className="plus">＋</div>
-              <div>
-                <strong>More content coming soon</strong>
-                <p>
-                  New PDF or PPT materials can be added as additional tiles.
-                </p>
-              </div>
-            </div>
+
           </section>
 
           <div className="hint-box">
@@ -307,11 +266,37 @@ function ScreenContent({ screen }: { screen: Screen }) {
         </div>
       )}
 
+      {screen.preview && (
+        <div
+          className="content-card large"
+          style={{
+            marginTop: "22px",
+            marginBottom: "18px",
+            padding: "12px",
+            width: "100%",
+            boxSizing: "border-box",
+            background: "rgba(255, 255, 255, 0.92)"
+          }}
+        >
+          <img
+            src={screen.preview.src}
+            alt={screen.preview.alt}
+            style={{
+              display: "block",
+              width: "100%",
+              height: "auto",
+              borderRadius: "12px"
+            }}
+          />
+        </div>
+      )}
+
       {screen.download && (
         <a
         className="download-button"
         href={screen.download.href}
-        download
+        target="_blank"
+        rel="noopener noreferrer"
         onClick={() =>
           trackEvent("pdf_download", {
             label: screen.download!.label,
@@ -340,7 +325,7 @@ function ContactScreen({ onBack, onMenu, onContact }: { onBack: () => void; onMe
 
             <p>
               Please contact us for medical-scientific questions, reports of adverse events,
-              and product complaints.
+              and product complaints
             </p>
 
             <div
@@ -375,7 +360,7 @@ function ContactScreen({ onBack, onMenu, onContact }: { onBack: () => void; onMe
                   lineHeight: 1.4
                 }}
               >
-                <strong>Mail:</strong> medical.information_global@regeneron.com
+                <strong>Mail:</strong> medical.information_global<br />@regeneron.com
               </div>
             </div>
 
@@ -452,7 +437,17 @@ function ModuleScreen({
       <div className="phone">
         <Header onContact={onContact} />
 
-        <main className={`module-screen ${module.theme}`}>
+        <main
+          className={`module-screen ${module.theme}`}
+          style={
+            module.theme === "publications"
+              ? {
+                  background:
+                    "linear-gradient(135deg, #4eb6dc 0%, #0a4b86 48%, #062744 100%)"
+                }
+              : undefined
+          }
+        >
           <div className="module-progress-row">
             <span>{module.eyebrow}</span>
             <span>
@@ -473,10 +468,10 @@ function ModuleScreen({
           </section>
 
           <nav className="bottom-nav">
-            <button onClick={goBack}>Back</button>
+            <button onClick={onMenu}>Back</button>
             <button onClick={onMenu}>Menu</button>
-            <button className="primary" onClick={goNext}>
-              {index === module.screens.length - 1 ? "Done" : "Next"}
+            <button className="primary" onClick={onMenu}>
+              Done
             </button>
           </nav>
         </main>
