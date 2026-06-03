@@ -360,7 +360,7 @@ function ContactScreen({ onBack, onMenu, onContact }: { onBack: () => void; onMe
                   lineHeight: 1.4
                 }}
               >
-                <strong>Mail:</strong> medical.information_global<br />@regeneron.com
+                <strong>Mail:</strong> medical.information<br />_global@regeneron.com
               </div>
             </div>
 
